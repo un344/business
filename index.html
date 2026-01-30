@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الدخول للوحدات الدراسية</title>
+
+    <!-- خط Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* ألوان Google المظلمة */
+            --g-gray-900: #202124;
+            --g-gray-800: #292a2d;
+            --g-gray-700: #3c4043;
+            --g-gray-600: #5f6368;
+            --g-gray-500: #80868b;
+            --g-gray-400: #9aa0a6;
+            --g-gray-300: #bdbfc3;
+            --g-gray-200: #dadce0;
+            --g-gray-100: #e8eaed;
+
+            /* ألوان Google الرئيسية */
+            --g-blue: #4285f4;
+            --g-red: #ea4335;
+            --g-yellow: #fbbc04;
+            --g-green: #34a853;
+            --g-purple: #a142f4;
+
+            /* متغيرات التصميم */
+            --bg-primary: var(--g-gray-900);
+            --bg-secondary: var(--g-gray-800);
+            --bg-surface: var(--g-gray-800);
+            --bg-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #e8eaed;
+            --text-secondary: var(--g-gray-300);
+            --border-color: var(--g-gray-700);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 24px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* الهيدر - ستايل Google */
+        .header {
+            text-align: center;
+            padding: 64px 32px;
+            margin-bottom: 48px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, var(--g-blue) 0%, transparent 70%),
+                radial-gradient(circle at 80% 20%, var(--g-green) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+
+        .logo {
+            font-size: 72px;
+            margin-bottom: 24px;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--g-blue), var(--g-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .header-subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* شبكة الكروت - Material Design */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .material-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .material-card:hover {
+            background: var(--bg-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--g-gray-600);
+        }
+
+        .material-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to left, var(--g-blue), var(--g-green));
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .material-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 24px;
+            background: var(--bg-surface);
+            color: var(--g-blue);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .material-button:hover {
+            background: var(--bg-hover);
+            border-color: var(--g-blue);
+        }
+
+        .material-button i {
+            font-size: 18px;
+        }
+
+        /* شريط الأزرار - Design Modern */
+        .action-bar {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            margin: 64px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(66, 133, 244, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(52, 168, 83, 0.05) 0%, transparent 50%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .action-button:hover {
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+            border-color: var(--g-blue);
+        }
+
+        .action-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .button-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .button-subtext {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        /* ألوان الأيقونات */
+        .blue-icon {
+            color: var(--g-blue);
+        }
+
+        .green-icon {
+            color: var(--g-green);
+        }
+
+        .yellow-icon {
+            color: var(--g-yellow);
+        }
+
+        .red-icon {
+            color: var(--g-red);
+        }
+
+        .purple-icon {
+            color: var(--g-purple);
+        }
+
+        /* التذييل - ستايل Google */
+        footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            margin-top: 48px;
+        }
+
+        .footer-text {
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        /* تأثيرات متحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .header {
+                padding: 48px 24px;
+                margin-bottom: 32px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header-subtitle {
+                font-size: 18px;
+            }
+
+            .logo {
+                font-size: 56px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .action-bar {
+                padding: 24px 16px;
+                margin: 48px 0;
+            }
+
+            .section-title {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+
+            .buttons-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .action-button {
+                padding: 20px 16px;
+            }
+
+            .action-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header-subtitle {
+                font-size: 16px;
+            }
+
+            .logo {
+                font-size: 48px;
+            }
+
+            .material-card {
+                padding: 24px;
+            }
+
+            .card-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+
+            .card-title {
+                font-size: 20px;
+            }
+
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-button {
+                padding: 24px 20px;
+            }
+        }
+
+        /* تأثيرات إضافية */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* خطوط التقسيم */
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 32px 0;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- الهيدر -->
+        <header class="header fade-in">
+            <i class="fas fa-graduation-cap logo"></i>
+            <h1>نظام الدخول للوحدات الدراسية</h1>
+            <p class="header-subtitle">
+                منصة تعليمية متكاملة توفر وصولاً سهلاً للمواد الدراسية والمجتمع التعليمي
+            </p>
+        </header>
+
+        <!-- الأقسام الرئيسية -->
+        <div class="cards-grid">
+            <!-- قسم المحاسبة -->
+            <div class="material-card fade-in" style="animation-delay: 0.1s">
+                <div class="card-icon" style="color: var(--g-blue)">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="card-title">قسم المحاسبة</h3>
+                <p class="card-description">
+                    مواد محاسبة متخصصة تشمل المحاسبة المالية، محاسبة التكاليف، التدقيق المحاسبي،
+                    والأنظمة المحاسبية المتقدمة مع دروس تفاعلية.
+                </p>
+                <a href="C:\Users\jonyy\Downloads\New folder (22)\unknown.github.io-main\unknown.github.io-main\ACC\accounting.html"
+                    class="material-button ripple">
+                    <span>دخول القسم</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- قسم الإدارة -->
+            <div class="material-card fade-in" style="animation-delay: 0.2s">
+                <div class="card-icon" style="color: var(--g-green)">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="card-title">قسم الإدارة</h3>
+                <p class="card-description">
+                    إدارة الأعمال، التسويق، الإدارة الاستراتيجية، الموارد البشرية،
+                    وإدارة العمليات مع مواد تعليمية شاملة ومحدثة.
+                </p>
+                <a href="C:\Users\jonyy\Downloads\New folder (22)\unknown.github.io-main\unknown.github.io-main\BUSS\buss.html"
+                    class="material-button ripple">
+                    <span>دخول القسم</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- المواد المشتركة -->
+            <!--   <div class="material-card fade-in" style="animation-delay: 0.3s">
+                <div class="card-icon" style="color: var(--g-yellow)">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3 class="card-title">المواد المشتركة</h3>
+                <p class="card-description">
+                    اللغة الإنجليزية، مهارات الحاسوب، البحث العلمي، وأخلاقيات المهنة
+                    لجميع الأقسام مع محتوى تعليمي متنوع.
+                </p>
+                <a href="common.html" class="material-button ripple">
+                    <span>عرض المواد</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div> -->
+        </div>
+
+        <!-- خط التقسيم -->
+        <div class="divider"></div>
+
+        <!-- شريط الأزرار -->
+        <section class="action-bar fade-in" style="animation-delay: 0.4s">
+            <h2 class="section-title">روابط سريعة</h2>
+
+            <div class="buttons-grid">
+                <!--  Whatsapp -->
+                <a href="calendar.html" class="action-button ripple">
+                    <div class="action-icon green-icon">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div class="button-text">Whatsapp</div>
+                    <div class="button-subtext"> جروب واتس </div>
+                </a>
+
+                <!-- about  -->
+                <a href="about.html" class="action-button ripple">
+                    <div class="action-icon blue-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="button-text">About</div>
+                    <div class="button-subtext"> من نحن</div>
+                </a>
+
+                <!-- المنصات التعليمية -->
+                <a href="platforms.html" class="action-button ripple">
+                    <div class="action-icon purple-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="button-text">المنصات التعليمية</div>
+                    <div class="button-subtext">أنظمة التعليم الإلكتروني</div>
+                </a>
+
+                <!-- الدعم الفني -->
+                <a href="support.html" class="action-button ripple">
+                    <div class="action-icon yellow-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="button-text">الدعم الفني</div>
+                    <div class="button-subtext">مساعدة ودعم تقني</div>
+                </a>
+
+                <!-- الأسئلة الشائعة -->
+                <a href="faq.html" class="action-button ripple">
+                    <div class="action-icon red-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="button-text">الأسئلة الشائعة</div>
+                    <div class="button-subtext">إجابات عن استفساراتكم</div>
+                </a>
+
+                <!-- اتصل بنا -->
+                <a href="contact.html" class="action-button ripple">
+                    <div class="action-icon blue-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="button-text">اتصل بنا</div>
+                    <div class="button-subtext">تواصل مع الإدارة</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- التذييل -->
+        <footer class="fade-in" style="animation-delay: 0.5s">
+            <p class="footer-text">
+                © 2026 نظام الوحدات الدراسية -
+                <br>
+                جميع الحقوق محفوظة
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // تأثيرات Material Design
+        document.addEventListener('DOMContentLoaded', function () {
+            // تأثير Ripple للأزرار
+            const buttons = document.querySelectorAll('.ripple');
+            buttons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+
+                    const ripple = document.createElement('span');
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // تأثير الظهور التدريجي للعناصر
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // مراقبة العناصر للظهور عند التمرير
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // تأثير Hover للكروت
+            const cards = document.querySelectorAll('.material-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.zIndex = '10';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.zIndex = '1';
+                });
+            });
+
+            // تأثير النقر للكروت
+            cards.forEach(card => {
+                card.addEventListener('click', function (e) {
+                    if (!e.target.classList.contains('material-button')) {
+                        const link = this.querySelector('a');
+                        if (link) {
+                            link.click();
+                        }
+                    }
+                });
+            });
+
+            // تأثير تحريك الأزرار عند التمرير
+            const actionButtons = document.querySelectorAll('.action-button');
+            actionButtons.forEach(button => {
+                button.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-4px)';
+                });
+
+                button.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // إضافة تأثير Ripple ديناميكي
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple-effect {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .material-card, .action-button {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

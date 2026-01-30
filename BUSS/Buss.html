@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Business - الإدارة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Almarai:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary-color: #f5f5f5;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .dark-mode {
+            --primary-color: #4caf50;
+            --primary-light: #66bb6a;
+            --primary-dark: #388e3c;
+            --secondary-color: #1e1e1e;
+            --text-dark: #f0f0f0;
+            --text-light: #ffffff;
+            --card-bg: #2d2d2d;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --shadow-hover: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Almarai', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #0d1f0e 0%, #1a381b 100%);
+        }
+
+        /* تصميم الشريط العلوي */
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .main-title {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--primary-dark);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .dark-mode .subtitle {
+            color: var(--primary-light);
+        }
+
+        /* أزرار التحكم */
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .theme-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .theme-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow-hover);
+        }
+
+        .contributors-btn {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .contributors-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* تصميم الشبكة */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* تصميم الكروت */
+        .subject-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 30px 25px;
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            transition: var(--transition);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-hover);
+        }
+
+        .subject-card:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .subject-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .subject-title {
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            z-index: 1;
+            line-height: 1.4;
+        }
+
+        .subject-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 8px;
+            text-align: center;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        /* قسم المؤسس */
+        .founder-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 8px 20px var(--shadow);
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .founder-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .founder-name {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+        }
+
+        .founder-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* زر التلغرام */
+        .telegram-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+            z-index: 1000;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.4);
+        }
+
+        .tg-icon {
+            font-size: 22px;
+        }
+
+        /* تأثيرات إضافية */
+        .floating-element {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(100px, 100px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(0, 200px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(-100px, 100px) rotate(270deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-title {
+                font-size: 36px;
+            }
+
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .subject-card {
+                height: 160px;
+                padding: 25px 20px;
+            }
+
+            .subject-icon {
+                font-size: 36px;
+            }
+
+            .subject-title {
+                font-size: 18px;
+            }
+
+            .telegram-btn {
+                bottom: 15px;
+                left: 15px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+
+            .founder-section {
+                padding: 20px;
+                margin: 30px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .main-title {
+                font-size: 30px;
+            }
+
+            .control-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* حقوق النشر */
+        .copyright {
+            text-align: center;
+            padding: 30px;
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-top: 50px;
+            border-top: 1px solid rgba(76, 175, 80, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- العناصر العائمة للخلفية -->
+    <div class="floating-element" style="top:10%; left:5%;"></div>
+    <div class="floating-element" style="top:20%; right:8%; width: 80px; height: 80px;"></div>
+    <div class="floating-element" style="bottom:30%; left:15%; width: 40px; height: 40px;"></div>
+
+    <!-- الهيدر وأزرار التحكم -->
+    <div class="header-container">
+        <header>
+            <h1 class="main-title">📚 Business</h1>
+            <p class="subtitle">3RD YEAR-Business Section</p>
+        </header>
+        <div class="control-buttons">
+            <button class="btn theme-btn" id="themeButton">
+                <i class="fas fa-moon"></i> الوضع الليلي
+            </button>
+            <!--  <button class="btn theme-btn" id="contributorsBtn">
+              <i class="fas fa-users"></i> المساهمون
+            </button> -->
+        </div>
+    </div>
+
+    <!-- شبكة المواد -->
+    <div class="container">
+        <a href="HR.html" class="subject-card">
+            <div class="subject-icon"><i class="fa-solid fa-solidLarge fa-contact-book"></i></div>
+            <div class="subject-title">أدارة موارد بشرية</div>
+            <div class="subject-desc">HR</div>
+        </a>
+        <a href="SupplyChain.html" class="subject-card">
+            <div class="subject-icon"><i class="fa-solid fa-dolly"></i></div>
+            <div class="subject-title">إدارة المواد وإمداد</div>
+            <div class="subject-desc">Supply Chain</div>
+        </a>
+        <a href="PPC.html" class="subject-card">
+            <div class="subject-icon"><i class="fa-solid fa-industry"></i></div>
+            <div class="subject-title">تخطيط ومراقبة انتاج</div>
+            <div class="subject-desc">PPC</div>
+        </a>
+        <a href="########" class="subject-card">
+            <div class="subject-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div class="subject-title">########</div>
+            <div class="subject-desc">########</div>
+        </a>
+
+    </div>
+
+    <!-- قسم المؤسس -->
+    <div class="founder-section">
+        <div class="founder-title"> مقدمة من</div>
+        <div class="founder-name">########</div>
+        <p class="founder-desc">
+            نسعى لتقديم محتوى علمي متميز يساهم في رفع مستوى التحصيل الدراسي.
+        </p>
+    </div>
+
+    <!-- زر التلغرام -->
+    <a href="about.html" class="telegram-btn" target="_blank">
+        <i class="fas fa-question-circle tg-icon"></i>
+        <span>عن المنصة</span>
+    </a>
+    <!-- حقوق النشر -->
+    <div class="copyright">
+        © 2026 نظام الوحدات الدراسية جميع الحقوق محفوظة |
+    </div>
+    </div>
+
+    <script>
+        // تبديل الوضع الليلي
+        const themeButton = document.getElementById('themeButton');
+        const body = document.body;
+
+        // التحقق من التفضيل المحفوظ
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeButton.innerHTML = '<i class="fas fa-sun"></i> الوضع النهاري';
+        }
+
+        themeButton.addEventListener('click', function () {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                themeButton.innerHTML = '<i class="fas fa-sun"></i> الوضع النهاري';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                themeButton.innerHTML = '<i class="fas fa-moon"></i> الوضع الليلي';
+            }
+        });
+
+        // محاكاة زر المساهمين
+        const contributorsBtn = document.getElementById('contributorsBtn');
+        contributorsBtn.addEventListener('click', function () {
+            alert('سيتم إضافة صفحة المساهمين قريبًا!');
+        });
+
+        // تأثيرات عند التمرير
+        window.addEventListener('scroll', function () {
+            const cards = document.querySelectorAll('.subject-card');
+            const scrollPosition = window.scrollY;
+
+            cards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+
+                if (cardPosition < screenPosition) {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // تهيئة تأثيرات الكروت
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+            });
+
+            // تشغيل تأثير بعد تحميل الصفحة
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>
